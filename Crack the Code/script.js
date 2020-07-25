@@ -2,7 +2,7 @@ let randomNumbers = [];
 let complexityLength=4;
 let won=true;
 while (randomNumbers.length < complexityLength) {
-    let r = Math.floor(Math.random() * 10);
+    let r = Math.floor(Math.random() * (9 - 1 + 1) ) + 1;
     if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
 }
 console.log(randomNumbers.join(''));
@@ -75,7 +75,7 @@ button.addEventListener('click', function () {
         scoreSection.innerHTML = "";
         instructionSection.innerHTML = "";
         while (randomNumbers.length < complexityLength) {
-            let r = Math.floor(Math.random() * 10);
+            let r = Math.floor(Math.random() * (9 - 1 + 1) ) + 1;
             if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
         }
         console.log(randomNumbers.join(''));
@@ -106,7 +106,7 @@ button.addEventListener('click', function () {
                     won=false;
                 }
             }
-            if(score==500 || won==true){
+            if(won==true){
             complexityLength+=1;
             scoreSection.innerHTML=" You won<br>Your Score is "+score ;
             gameSection.innerHTML="";
@@ -120,6 +120,7 @@ button.addEventListener('click', function () {
             document.body.append(gameSection,scoreSection,buttonSection);
             isPlaying = false;
             randomNumbers = [];
+            score+=500;
             }
         } else {
             scoreSection.innerHTML="Your Score is "+score;
@@ -133,6 +134,7 @@ button.addEventListener('click', function () {
             document.body.append(gameSection,scoreSection,buttonSection);
             isPlaying = false;
             randomNumbers = [];
+            score=+500;
         }
     }
 })
@@ -143,7 +145,7 @@ function generateCode(codeLength) {
         let br = document.createElement('br');
         el.setAttribute("type", "number");
         el.max = 9;
-        el.min = 0;
+        el.min = 1;
         el.style.padding="2%";
         el.style.fontSize="1.5em";
         el.style.textAlign="center"
