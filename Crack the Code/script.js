@@ -1,5 +1,7 @@
 let randomNumbers = [];
-while (randomNumbers.length < 4) {
+let complexityLength=4;
+let won=true;
+while (randomNumbers.length < complexityLength) {
     let r = Math.floor(Math.random() * 10);
     if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
 }
@@ -14,8 +16,19 @@ messageSection.style.justifyContent = "center";
 messageSection.style.wordWrap = "break-word";
 messageSection.style.color = "ghostwhite";
 messageSection.style.fontWeight = "bolder";
-messageSection.style.fontSize = "50px"
+messageSection.style.fontSize = "40px"
 messageSection.innerHTML = "CRACK THE CODE";
+
+let scoreSection = document.createElement('div');
+scoreSection.setAttribute("class", "game-section");
+scoreSection.style.width = "auto";
+scoreSection.style.padding = "10px";
+scoreSection.style.display = "flex";
+scoreSection.style.justifyContent = "center";
+scoreSection.style.wordWrap = "break-word";
+scoreSection.style.color = "ghostwhite";
+scoreSection.style.fontWeight = "bolder";
+scoreSection.style.fontSize = "40px"
 
 
 let gameSection = document.createElement('div');
@@ -24,6 +37,7 @@ gameSection.style.width = "auto";
 gameSection.style.padding = "10px";
 gameSection.style.display = "flex";
 gameSection.style.justifyContent = "center";
+gameSection.style.wordWrap = "break-word";
 
 let buttonSection = document.createElement('div');
 buttonSection.setAttribute("class", "game-section");
@@ -31,11 +45,12 @@ buttonSection.style.width = "auto";
 buttonSection.style.padding = "10px";
 buttonSection.style.display = "flex";
 buttonSection.style.justifyContent = "center";
+buttonSection.style.wordWrap = "break-word";
 
 let instructionSection = document.createElement('div');
 instructionSection.setAttribute("class", "game-section");
 instructionSection.style.width = "auto";
-instructionSection.style.padding = "10px";
+instructionSection.style.padding = "5px";
 instructionSection.style.display = "flex";
 instructionSection.style.justifyContent = "center";
 instructionSection.style.wordWrap = "break-word";
@@ -50,23 +65,27 @@ buttonSection.appendChild(button)
 document.body.append(messageSection, gameSection, buttonSection, instructionSection);
 let chance = 1;
 let isPlaying = false;
+let score=500;
 
 button.addEventListener('click', function () {
     if (!isPlaying) {
         isPlaying = true;
         chance = 0;
         gameSection.innerHTML = "";
+        scoreSection.innerHTML = "";
         instructionSection.innerHTML = "";
-        while (randomNumbers.length < 4) {
+        while (randomNumbers.length < complexityLength) {
             let r = Math.floor(Math.random() * 10);
             if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
         }
         console.log(randomNumbers.join(''));
-        generateCode(4);
+        generateCode(complexityLength);
     } else {
         chance++;
         console.log(chance);
-        if (chance <= 5) {
+        scoreSection.innerHTML="Chances Left = "+(5-chance);
+        document.body.append(scoreSection,gameSection, buttonSection);
+        if (chance < 5) {
             let codes = document.querySelectorAll(".code");
             for (let i = 0; i < codes.length; i++) {
                 /*  console.log(`value=${codes[i].value} expected=${codes[i].expected} index=${randomNumbers.indexOf(Number(codes[i].value))} includes=${randomNumbers.includes(Number(codes[i].value))}`);*/
@@ -74,16 +93,36 @@ button.addEventListener('click', function () {
                 if (codes[i].value == codes[i].expected) {
                     codes[i].style.backgroundColor = "green";
                     codes[i].style.color = "white"
+                    won=true;
                 } else if (codes[i].value != codes[i].expected && randomNumbers.includes(Number(codes[i].value))) {
                     codes[i].style.backgroundColor = "orange";
                     codes[i].style.color = "white";
+                    score-=10;
+                    won=false;
                 } else {
                     codes[i].style.backgroundColor = "red";
                     codes[i].style.color = "white";
+                    score-=25;
+                    won=false;
                 }
             }
+            if(score==500 || won==true){
+            complexityLength+=1;
+            scoreSection.innerHTML=" You won<br>Your Score is "+score ;
+            gameSection.innerHTML="";
+            //messageSection.innerHTML = "Congratulations you won";
+            gameSection.append(button);
+            gameSection.style.fontWeight = "bolder";
+            gameSection.style.fontSize = "10px"
+            gameSection.style.color = "white";
+            button.innerHTML = 'Next Level';
+            buttonSection.appendChild(button)
+            document.body.append(gameSection,scoreSection,buttonSection);
+            isPlaying = false;
+            randomNumbers = [];
+            }
         } else {
-            messageSection.innerHTML="";
+            scoreSection.innerHTML="Your Score is "+score;
             gameSection.innerHTML = "Game Over";
             gameSection.append(button);
             gameSection.style.fontWeight = "bolder";
@@ -91,7 +130,7 @@ button.addEventListener('click', function () {
             gameSection.style.color = "white";
             button.innerHTML = 'Play Again';
             buttonSection.appendChild(button)
-            document.body.append(gameSection, buttonSection);
+            document.body.append(gameSection,scoreSection,buttonSection);
             isPlaying = false;
             randomNumbers = [];
         }
@@ -106,13 +145,14 @@ function generateCode(codeLength) {
         el.max = 9;
         el.min = 0;
         el.style.padding="2%";
-        el.style.fontSize="2em";
+        el.style.fontSize="1.5em";
         el.style.textAlign="center"
         el.size = 1;
         //el.style.width = "50px";
         el.classList.add('code');
         el.order = i;
-        el.style.flexBasis = "20%";
+        el.style.flexBasis = "10%";
+        el.setAttribute("required","")
         el.expected = randomNumbers[i];
         button.innerHTML = "Validate Code";
         gameSection.appendChild(el);
