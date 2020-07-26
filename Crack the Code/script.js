@@ -5,7 +5,6 @@ while (randomNumbers.length < complexityLength) {
     let r = Math.floor(Math.random() * (9 - 1 + 1) ) + 1;
     if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
 }
-console.log(randomNumbers.join(''));
 
 let messageSection = document.createElement('div');
 messageSection.setAttribute("class", "game-section");
@@ -78,19 +77,15 @@ button.addEventListener('click', function () {
             let r = Math.floor(Math.random() * (9 - 1 + 1) ) + 1;
             if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
         }
-        console.log(randomNumbers.join(''));
         generateCode(complexityLength);
     } else {
         chance++;
-        console.log(chance);
         scoreSection.innerHTML="Chances Left = "+(5-chance);
         document.body.append(scoreSection,gameSection, buttonSection);
         resultsArr=[];
         if (chance <= 5) {
             let codes = document.querySelectorAll(".code");
             for (let i = 0; i < codes.length; i++) {
-                /*  console.log(`value=${codes[i].value} expected=${codes[i].expected} index=${randomNumbers.indexOf(Number(codes[i].value))} includes=${randomNumbers.includes(Number(codes[i].value))}`);*/
-                //console.log(randomNumbers)
                 if (codes[i].value == codes[i].expected) {
                     codes[i].style.backgroundColor = "green";
                     codes[i].style.color = "white"
@@ -103,7 +98,7 @@ button.addEventListener('click', function () {
                 } else {
                     codes[i].style.backgroundColor = "red";
                     codes[i].style.color = "white";
-                    score-=25;
+                    score-=Math.round(100/complexityLength);
                     resultsArr.push(false);
                 }
             }
@@ -111,7 +106,6 @@ button.addEventListener('click', function () {
             complexityLength+=1;
             scoreSection.innerHTML=" You won<br>Your Score is "+score ;
             gameSection.innerHTML="";
-            //messageSection.innerHTML = "Congratulations you won";
             gameSection.append(button);
             gameSection.style.fontWeight = "bolder";
             gameSection.style.fontSize = "10px"
@@ -159,10 +153,10 @@ function generateCode(codeLength) {
         el.style.fontWeight="bold";
         el.style.textAlign="center"
         el.size = 1;
-        //el.style.width = "50px";
         el.classList.add('code');
         el.order = i;
         el.style.flexBasis = "10%";
+        el.style.outline="none";
         el.setAttribute("required","")
         el.expected = randomNumbers[i];
         button.innerHTML = "Validate Code";
