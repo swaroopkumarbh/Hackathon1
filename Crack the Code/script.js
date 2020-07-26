@@ -54,12 +54,13 @@ instructionSection.style.display = "flex";
 instructionSection.style.justifyContent = "center";
 instructionSection.style.wordWrap = "break-word";
 instructionSection.style.color = "ghostwhite";
+instructionSection.style.fontSize="1.5rem"
 instructionSection.innerHTML = "Instructions: The computer gives the player hints about the numbers in color-coding. Red represents the digit is not present in that number, orange represents the digit is present in the number but at the wrong place and green represents the particular digit is present in the number at the right place";
 
 let button = document.createElement('button');
 button.setAttribute('class', 'my-button');
 button.innerHTML = "Start";
-document.body.style.background = "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)";
+document.body.style.background = "linear-gradient(90deg, rgba(63,94,251,0.8886905103838411) 0%, rgba(189,67,92,0.8382703423166141) 92%)";
 buttonSection.appendChild(button)
 document.body.append(messageSection, gameSection, buttonSection, instructionSection);
 let chance = 1;

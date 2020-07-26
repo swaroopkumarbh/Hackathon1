@@ -30,14 +30,14 @@
 }
 input {
   border-radius: 50%;
-  height: 15vmin;
+  height: 11vmin;
   width: 20vw;
 }
 
 @media only screen and (min-width: 1200px) {
   input {
     border-radius: 50%;
-    height: 30vmin;
+    height: 17vmin;
     width: 20vw;
   }
 }
@@ -45,14 +45,14 @@ input {
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
     input {
         border-radius: 50%;
-        height: 35vmin;
+        height: 13vmin;
         width: 20vw;
       }
 }
 @media only screen and(min-width: 100px) and (max-width:462px){
   input {
       border-radius: 50%;
-      height: 5vmin;
+      height: 4vmin;
       width: 5vw;
     }
     .game-section{
