@@ -1,6 +1,6 @@
 let randomNumbers = [];
 let complexityLength=4;
-let won=true;
+let resultsArr=[];
 while (randomNumbers.length < complexityLength) {
     let r = Math.floor(Math.random() * (9 - 1 + 1) ) + 1;
     if (randomNumbers.indexOf(r) === -1) randomNumbers.push(r);
@@ -85,7 +85,8 @@ button.addEventListener('click', function () {
         console.log(chance);
         scoreSection.innerHTML="Chances Left = "+(5-chance);
         document.body.append(scoreSection,gameSection, buttonSection);
-        if (chance < 5) {
+        resultsArr=[];
+        if (chance <= 5) {
             let codes = document.querySelectorAll(".code");
             for (let i = 0; i < codes.length; i++) {
                 /*  console.log(`value=${codes[i].value} expected=${codes[i].expected} index=${randomNumbers.indexOf(Number(codes[i].value))} includes=${randomNumbers.includes(Number(codes[i].value))}`);*/
@@ -93,20 +94,20 @@ button.addEventListener('click', function () {
                 if (codes[i].value == codes[i].expected) {
                     codes[i].style.backgroundColor = "green";
                     codes[i].style.color = "white"
-                    won=true;
+                    resultsArr.push(true);
                 } else if (codes[i].value != codes[i].expected && randomNumbers.includes(Number(codes[i].value))) {
                     codes[i].style.backgroundColor = "orange";
                     codes[i].style.color = "white";
                     score-=10;
-                    won=false;
+                   resultsArr.push(false);
                 } else {
                     codes[i].style.backgroundColor = "red";
                     codes[i].style.color = "white";
                     score-=25;
-                    won=false;
+                    resultsArr.push(false);
                 }
             }
-            if(won==true){
+            if(resultsArr.indexOf(false)==-1){
             complexityLength+=1;
             scoreSection.innerHTML=" You won<br>Your Score is "+score ;
             gameSection.innerHTML="";
@@ -116,6 +117,13 @@ button.addEventListener('click', function () {
             gameSection.style.fontSize = "10px"
             gameSection.style.color = "white";
             button.innerHTML = 'Next Level';
+            if(randomNumbers.length>6){
+                button.innerHTML = 'Finish';
+                randomNumbers=[];
+                isPlaying=false;
+                complexityLength=4;
+                score=0;
+            }
             buttonSection.appendChild(button)
             document.body.append(gameSection,scoreSection,buttonSection);
             isPlaying = false;
@@ -146,8 +154,9 @@ function generateCode(codeLength) {
         el.setAttribute("type", "number");
         el.max = 9;
         el.min = 1;
-        el.style.padding="2%";
-        el.style.fontSize="1.5em";
+        el.style.padding="1%";
+        el.style.fontSize="3vw";
+        el.style.fontWeight="bold";
         el.style.textAlign="center"
         el.size = 1;
         //el.style.width = "50px";

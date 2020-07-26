@@ -49,6 +49,16 @@ input {
         width: 20vw;
       }
 }
+@media only screen and(min-width: 100px) and (max-width:462px){
+  input {
+      border-radius: 50%;
+      height: 5vmin;
+      width: 5vw;
+    }
+    .game-section{
+      width: 70vw;
+    }
+}
 body{
   width: auto;
 }
